@@ -3,331 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Color Contrast Checker — WCAG Accessibility Tool</title>
+  <title>Color Contrast Checker — WCAG Accessibility Tool | Digital BigHit</title>
   <meta name="description" content="Free color contrast checker tool to test text and background color combinations for WCAG 2.2 AA and AAA accessibility compliance. Instantly see your contrast ratio." />
   <meta name="keywords" content="color contrast checker, WCAG contrast ratio, accessibility tool, web accessibility, text contrast, background color contrast, WCAG 2.2, AA AAA compliance, contrast ratio calculator, accessible design" />
   <meta name="robots" content="index, follow" />
-  <meta name="author" content="Color Contrast Checker" />
+  <meta name="author" content="Ajay K. — Digital BigHit" />
   <!-- Open Graph -->
   <meta property="og:title" content="Color Contrast Checker — WCAG Accessibility Tool" />
   <meta property="og:description" content="Instantly check if your color combinations meet WCAG 2.2 accessibility standards. Free tool for designers and developers." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tools.digitalbighit.com/color-contrast-checker/" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Color Contrast Checker — WCAG Accessibility Tool" />
   <meta name="twitter:description" content="Free WCAG 2.2 color contrast checker for designers and developers. Test AA and AAA compliance instantly." />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Outfit', sans-serif; background: #f9fafb; color: #111827; min-height: 100vh; }
-
-    .page { padding: 48px 16px 64px; }
-
-    .header { text-align: center; margin-bottom: 40px; }
-    .header h1 { font-size: 48px; font-weight: 600; letter-spacing: -1.5px; color: #111827; }
-    .header p { color: #6b7280; margin-top: 10px; font-size: 16px; }
-
-    .card { background: white; border-radius: 20px; border: 1px solid #e5e7eb; max-width: 1000px; margin: 0 auto; overflow: hidden; display: flex; }
-    .left-col { width: 50%; padding: 28px; border-right: 1px solid #e5e7eb; }
-    .right-col { width: 50%; padding: 28px; }
-
-    .section-label { font-size: 11px; font-weight: 700; color: #9ca3af; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
-
-    .color-inputs { display: flex; gap: 12px; margin-bottom: 24px; }
-    .color-field { flex: 1; }
-    .color-field label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 8px; }
-    .color-row { display: flex; align-items: center; gap: 8px; }
-    .swatch-wrap { position: relative; width: 34px; height: 34px; border-radius: 8px; border: 1px solid #d1d5db; overflow: hidden; flex-shrink: 0; cursor: pointer; }
-    .swatch-wrap input[type=color] { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); opacity: 0; cursor: pointer; }
-    .swatch-preview { width: 100%; height: 100%; pointer-events: none; }
-    .hex-input { flex: 1; padding: 7px 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; font-family: 'Outfit', sans-serif; outline: none; }
-    .hex-input:focus { border-color: #6b7280; }
-
-    .tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-    .tab { padding: 6px 14px; border-radius: 8px; border: 1px solid #d1d5db; background: white; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; color: #374151; }
-    .tab.active { background: #111827; color: white; border-color: #111827; }
-    .tab:hover:not(.active) { background: #f3f4f6; }
-
-    .preview-box { border-radius: 12px; padding: 24px; min-height: 160px; border: 1px solid #e5e7eb; transition: background 0.2s, color 0.2s; }
-    .preview-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 10px; }
-    .preview-box p.body { font-size: 16px; line-height: 1.7; margin-bottom: 8px; }
-    .preview-box p.small { font-size: 13px; opacity: 0.9; }
-    .preview-box p.large { font-size: 18px; line-height: 1.6; }
-    .graphic-row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
-    .graphic-icon { width: 40px; height: 40px; border-radius: 10px; border-width: 3px; border-style: solid; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-    .graphic-bar { flex: 1; height: 12px; border-radius: 6px; }
-    .graphic-btns { display: flex; gap: 8px; margin-bottom: 10px; }
-    .graphic-btn { padding: 6px 14px; border-radius: 8px; border-width: 2px; border-style: solid; font-size: 13px; font-weight: 600; font-family: 'Outfit', sans-serif; background: transparent; cursor: default; }
-    .preview-box p.caption { font-size: 12px; opacity: 0.85; }
-
-    /* Ratio */
-    .ratio-num { font-size: 52px; font-weight: 700; line-height: 1; }
-    .ratio-sub { font-size: 14px; color: #6b7280; margin-top: 4px; margin-bottom: 14px; }
-
-    .bar-track { background: #e5e7eb; border-radius: 999px; height: 8px; position: relative; margin-bottom: 4px; }
-    .bar-fill { height: 8px; border-radius: 999px; transition: width 0.35s; }
-    .bar-marker { position: absolute; top: -3px; width: 2px; height: 14px; background: #9ca3af; transform: translateX(-50%); }
-    .bar-labels { display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-bottom: 20px; }
-
-    .wcag-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 10px; background: #f9fafb; margin-bottom: 6px; }
-    .wcag-label { font-size: 14px; font-weight: 300; color: #111827; }
-    .wcag-sub { font-size: 12px; color: #9ca3af; margin-left: 6px; }
-    .badge { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 300; }
-    .pass { background: #dcfce7; color: #166534; }
-    .fail { background: #fee2e2; color: #991b1b; }
-
-    /* How it works */
-    .how-section { max-width: 1000px; margin: 24px auto 0; background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 28px; }
-    .how-title { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .how-col-title { font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 14px; }
-    .how-step { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
-    .how-num { min-width: 24px; height: 24px; border-radius: 50%; background: #111827; color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-    .how-step p { font-size: 13px; color: #4b5563; line-height: 1.55; }
-    .level-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .level-chip { min-width: 54px; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; text-align: center; }
-    .level-desc { font-size: 12px; color: #4b5563; }
-
-    /* Footer */
-    .footer { text-align: center; margin-top: 36px; max-width: 900px; margin-left: auto; margin-right: auto; font-size: 14px; color: #9ca3af; line-height: 1.7; }
-    .footer strong { color: #374151; }
-    .footer a { color: #3b82f6; text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 700px) {
-
-      .color-inputs {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    flex-direction: column;
-}
-      .header h1 { font-size: 32px; }
-      .card { flex-direction: column; }
-      .left-col, .right-col { width: 100%; border-right: none; }
-      .left-col { border-bottom: 1px solid #e5e7eb; }
-      .how-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-<div class="page">
 
-  <!-- Header -->
-  <div class="header">
-    <h1>Color Contrast Checker</h1>
-    <p>Instantly check if your color combinations meet WCAG accessibility standards</p>
-  </div>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="https://tools.digitalbighit.com">
+      Digital BigHit <span>Tools</span>
+    </a>
+    <a class="nav-back" href="https://tools.digitalbighit.com">← All Tools</a>
+  </nav>
 
-  <!-- Main Card -->
-  <div class="card">
-    <!-- LEFT -->
-    <div class="left-col">
-      <p class="section-label">Color Inputs</p>
-      <div class="color-inputs">
-        <div class="color-field">
-          <label>Text Color</label>
-          <div class="color-row">
-            <div class="swatch-wrap">
-              <div class="swatch-preview" id="textSwatch"></div>
-              <input type="color" id="textColorPicker" value="#5cffb3" oninput="syncColor('text', this.value)" />
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Color Contrast Checker</h1>
+      <p>Instantly check if your color combinations meet WCAG accessibility standards</p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card">
+      <!-- LEFT -->
+      <div class="left-col">
+        <p class="section-label">Color Inputs</p>
+        <div class="color-inputs">
+          <div class="color-field">
+            <label>Text Color</label>
+            <div class="color-row">
+              <div class="swatch-wrap">
+                <div class="swatch-preview" id="textSwatch"></div>
+                <input type="color" id="textColorPicker" value="#5cffb3" oninput="syncColor('text', this.value)" />
+              </div>
+              <input class="hex-input" id="textColorHex" type="text" value="#5cffb3" oninput="syncColor('text', this.value)" maxlength="7" />
             </div>
-            <input class="hex-input" id="textColorHex" type="text" value="#5cffb3" oninput="syncColor('text', this.value)" maxlength="7" />
+          </div>
+          <div class="color-field">
+            <label>Background Color</label>
+            <div class="color-row">
+              <div class="swatch-wrap">
+                <div class="swatch-preview" id="bgSwatch"></div>
+                <input type="color" id="bgColorPicker" value="#10421e" oninput="syncColor('bg', this.value)" />
+              </div>
+              <input class="hex-input" id="bgColorHex" type="text" value="#10421e" oninput="syncColor('bg', this.value)" maxlength="7" />
+            </div>
           </div>
         </div>
-        <div class="color-field">
-          <label>Background Color</label>
-          <div class="color-row">
-            <div class="swatch-wrap">
-              <div class="swatch-preview" id="bgSwatch"></div>
-              <input type="color" id="bgColorPicker" value="#10421e" oninput="syncColor('bg', this.value)" />
-            </div>
-            <input class="hex-input" id="bgColorHex" type="text" value="#10421e" oninput="syncColor('bg', this.value)" maxlength="7" />
-          </div>
+
+        <p class="section-label">Preview</p>
+        <div class="tabs">
+          <button class="tab active" onclick="setTab('regular', this)">Regular Text</button>
+          <button class="tab" onclick="setTab('large', this)">Large Text</button>
+          <button class="tab" onclick="setTab('graphic', this)">Graphic Components</button>
+        </div>
+        <div class="preview-box" id="previewBox"></div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right-col">
+        <p class="section-label">Results</p>
+        <div id="ratioNum" class="ratio-num">—</div>
+        <div class="ratio-sub">Contrast Ratio</div>
+
+        <div class="bar-track">
+          <div class="bar-fill" id="barFill" style="width:0%"></div>
+          <div class="bar-marker" style="left:10%"></div>
+          <div class="bar-marker" style="left:17.5%"></div>
+          <div class="bar-marker" style="left:30%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>1:1 <span class="muted">min</span></span>
+          <span>3:1</span>
+          <span>4.5:1</span>
+          <span>7:1</span>
+          <span>21:1 <span class="muted">max</span></span>
+        </div>
+
+        <p class="section-label">WCAG 2.2 Standards</p>
+        <div id="wcagRows"></div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="how-section">
+      <div class="how-title">
+        <svg width="18" height="18" fill="none" stroke="#111827" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        How It Works
+      </div>
+      <div class="how-grid">
+        <div>
+          <p class="how-col-title">How contrast is calculated</p>
+          <div class="how-step"><div class="how-num">1</div><p>Your hex colors are converted to sRGB values on a 0–1 scale.</p></div>
+          <div class="how-step"><div class="how-num">2</div><p>Relative luminance is computed for each color using the official WCAG formula.</p></div>
+          <div class="how-step"><div class="how-num">3</div><p>The ratio is: <strong>(lighter + 0.05) ÷ (darker + 0.05)</strong>, giving a number from 1 to 21.</p></div>
+          <div class="how-step"><div class="how-num">4</div><p>Result is checked against WCAG thresholds for each text size and component type.</p></div>
+        </div>
+        <div>
+          <p class="how-col-title">What the ratio levels mean</p>
+          <div class="level-row"><div class="level-chip" style="background:#f3f4f6;color:#374151">1:1</div><div class="level-desc">Identical colors — completely invisible text</div></div>
+          <div class="level-row"><div class="level-chip" style="background:#fef3c7;color:#92400e">3:1</div><div class="level-desc">Minimum for large text &amp; UI components</div></div>
+          <div class="level-row"><div class="level-chip" style="background:#dcfce7;color:#166534">4.5:1</div><div class="level-desc">Standard for normal body text (AA)</div></div>
+          <div class="level-row"><div class="level-chip" style="background:#dbeafe;color:#1e40af">7:1</div><div class="level-desc">Enhanced readability for all users (AAA)</div></div>
+          <div class="level-row"><div class="level-chip" style="background:#111827;color:#fff">21:1</div><div class="level-desc">Maximum — pure black on white</div></div>
         </div>
       </div>
-
-      <p class="section-label">Preview</p>
-      <div class="tabs">
-        <button class="tab active" onclick="setTab('regular', this)">Regular Text</button>
-        <button class="tab" onclick="setTab('large', this)">Large Text</button>
-        <button class="tab" onclick="setTab('graphic', this)">Graphic Components</button>
-      </div>
-      <div class="preview-box" id="previewBox">
-        <!-- filled by JS -->
-      </div>
     </div>
 
-    <!-- RIGHT -->
-    <div class="right-col">
-      <p class="section-label">Results</p>
-
-      <div id="ratioNum" class="ratio-num">—</div>
-      <div class="ratio-sub">Contrast Ratio</div>
-
-      <div class="bar-track">
-        <div class="bar-fill" id="barFill" style="width:0%"></div>
-        <div class="bar-marker" style="left:10%"></div><!-- 3:1 -->
-        <div class="bar-marker" style="left:17.5%"></div><!-- 4.5:1 -->
-        <div class="bar-marker" style="left:30%"></div><!-- 7:1 -->
-      </div>
-      <div class="bar-labels">
-        <span>1:1 <span style="color:#d1d5db">min</span></span>
-        <span>3:1</span>
-        <span>4.5:1</span>
-        <span>7:1</span>
-        <span>21:1 <span style="color:#d1d5db">max</span></span>
-      </div>
-
-      <p class="section-label">WCAG 2.2 Standards</p>
-      <div id="wcagRows"></div>
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        I built this tool because <strong>accessibility shouldn't be an afterthought</strong> — it should be part of every design decision from the start. Paste your colors, check your ratios, and create experiences that <strong>everyone</strong> can enjoy. 🎨
+        <br/><br/>
+        Built by <strong>Ajay K.</strong> · <a href="https://digitalbighit.com" target="_blank" rel="noopener">Digital BigHit</a> ·
+        <a href="https://www.buymeacoffee.com/ajayk" target="_blank" rel="noopener">☕ Buy me a coffee</a> ·
+        <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener">WCAG 2.2 Guidelines →</a>
+      </p>
     </div>
+
   </div>
 
-  <!-- How It Works — always open -->
-  <div class="how-section">
-    <div class="how-title">
-      How It Works
-    </div>
-    <div class="how-grid">
-      <div>
-        <p class="how-col-title">How contrast is calculated</p>
-        <div class="how-step"><div class="how-num">1</div><p>Your hex colors are converted to sRGB values on a 0–1 scale.</p></div>
-        <div class="how-step"><div class="how-num">2</div><p>Relative luminance is computed for each color using the official WCAG formula.</p></div>
-        <div class="how-step"><div class="how-num">3</div><p>The ratio is: <strong>(lighter + 0.05) ÷ (darker + 0.05)</strong>, giving a number from 1 to 21.</p></div>
-        <div class="how-step"><div class="how-num">4</div><p>Result is checked against WCAG thresholds for each text size and component type.</p></div>
-      </div>
-      <div>
-        <p class="how-col-title">What the ratio levels mean</p>
-        <div class="level-row"><div class="level-chip" style="background:#f3f4f6;color:#374151">1:1</div><div class="level-desc">Identical colors — completely invisible text</div></div>
-        <div class="level-row"><div class="level-chip" style="background:#fef3c7;color:#92400e">3:1</div><div class="level-desc">Minimum for large text &amp; UI components</div></div>
-        <div class="level-row"><div class="level-chip" style="background:#dcfce7;color:#166534">4.5:1</div><div class="level-desc">Standard for normal body text (AA)</div></div>
-        <div class="level-row"><div class="level-chip" style="background:#dbeafe;color:#1e40af">7:1</div><div class="level-desc">Enhanced readability for all users (AAA)</div></div>
-        <div class="level-row"><div class="level-chip" style="background:#111827;color:#fff">21:1</div><div class="level-desc">Maximum — pure black on white</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer" style="margin-top:36px">
-    <p>
-      I built this tool because <strong>accessibility shouldn't be an afterthought</strong> — it should be part of every design decision from the start. Paste your colors, check your ratios, and create experiences that <strong>everyone</strong> can enjoy, regardless of how they see the world. Every small tweak you make brings the web a little closer to being truly inclusive. 🎨
-      <br/><br/>
-      <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener noreferrer">Read the WCAG 2.2 contrast guidelines →</a>
-    </p>
-  </div>
-
-</div>
-
-<script>
-  let textColor = '#5cffb3';
-  let bgColor = '#10421e';
-  let activeTab = 'regular';
-
-  function hexToRgb(hex) {
-    const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return r ? { r: parseInt(r[1],16), g: parseInt(r[2],16), b: parseInt(r[3],16) } : null;
-  }
-  function luminance(rgb) {
-    return ['r','g','b'].reduce((acc,c,i) => {
-      let v = rgb[c] / 255;
-      v = v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
-      return acc + v * [0.2126,0.7152,0.0722][i];
-    }, 0);
-  }
-  function contrast(c1, c2) {
-    const r1 = hexToRgb(c1), r2 = hexToRgb(c2);
-    if (!r1 || !r2) return 1;
-    const l1 = luminance(r1), l2 = luminance(r2);
-    const hi = Math.max(l1,l2), lo = Math.min(l1,l2);
-    return (hi+0.05)/(lo+0.05);
-  }
-  function barColor(r) {
-    if (r >= 7) return '#059669';
-    if (r >= 4.5) return '#d97706';
-    if (r >= 3) return '#ea580c';
-    return '#dc2626';
-  }
-
-  function syncColor(which, val) {
-    if (which === 'text') {
-      textColor = val;
-      document.getElementById('textColorHex').value = val;
-      document.getElementById('textColorPicker').value = val.length === 7 ? val : textColor;
-      document.getElementById('textSwatch').style.background = val;
-    } else {
-      bgColor = val;
-      document.getElementById('bgColorHex').value = val;
-      document.getElementById('bgColorPicker').value = val.length === 7 ? val : bgColor;
-      document.getElementById('bgSwatch').style.background = val;
-    }
-    update();
-  }
-
-  function setTab(tab, btn) {
-    activeTab = tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    renderPreview();
-  }
-
-  function renderPreview() {
-    const box = document.getElementById('previewBox');
-    box.style.background = bgColor;
-    box.style.color = textColor;
-    if (activeTab === 'regular') {
-      box.innerHTML = `
-        <p class="body">This is regular body text at 16px. Clear and readable content ensures everyone can engage with your message comfortably.</p>
-        <p class="small">Small text like captions, footnotes, and fine print also need to meet contrast standards for users with visual impairments.</p>`;
-    } else if (activeTab === 'large') {
-      box.innerHTML = `
-        <h2>Large Heading Text</h2>
-        <p class="large">Large text (18px+ or 14px bold) has a relaxed contrast requirement of 3:1 for AA, making it easier to style boldly.</p>`;
-    } else {
-      box.innerHTML = `
-        <div class="graphic-row">
-          <div class="graphic-icon" style="border-color:${textColor}">★</div>
-          <div class="graphic-bar" style="background:${textColor}"></div>
-        </div>
-        <div class="graphic-btns">
-          <button class="graphic-btn" style="border-color:${textColor};color:${textColor}">Button A</button>
-          <button class="graphic-btn" style="border-color:${textColor};color:${textColor}">Button B</button>
-          <button class="graphic-btn" style="border-color:${textColor};color:${textColor}">Button C</button>
-        </div>
-        <p class="caption">Icons, borders, charts, and UI components need a 3:1 ratio against adjacent colors.</p>`;
-    }
-  }
-
-  function update() {
-    const r = contrast(textColor, bgColor);
-    const bc = barColor(r);
-    const pct = Math.min(((r - 1) / 20) * 100, 100);
-
-    document.getElementById('ratioNum').textContent = r.toFixed(2) + ':1';
-    document.getElementById('ratioNum').style.color = bc;
-    document.getElementById('barFill').style.width = pct + '%';
-    document.getElementById('barFill').style.background = bc;
-
-    const rows = [
-      { label: 'Normal Text', level: 'AA',  sub: 'Min 4.5:1', pass: r >= 4.5 },
-      { label: 'Normal Text', level: 'AAA', sub: 'Min 7:1',   pass: r >= 7   },
-      { label: 'Large Text',  level: 'AA',  sub: 'Min 3:1',   pass: r >= 3   },
-      { label: 'Large Text',  level: 'AAA', sub: 'Min 4.5:1', pass: r >= 4.5 },
-      { label: 'Graphic / UI Components', level: '', sub: 'Min 3:1', pass: r >= 3 },
-    ];
-    document.getElementById('wcagRows').innerHTML = rows.map(row => `
-      <div class="wcag-row">
-        <span class="wcag-label">${row.label}${row.level ? ' — ' + row.level : ''}<span class="wcag-sub">${row.sub}</span></span>
-        <span class="badge ${row.pass ? 'pass' : 'fail'}">${row.pass ? 'Pass' : 'Fail'}</span>
-      </div>`).join('');
-
-    renderPreview();
-  }
-
-  // Init
-  document.getElementById('textSwatch').style.background = textColor;
-  document.getElementById('bgSwatch').style.background = bgColor;
-  update();
-</script>
+  <!-- JS -->
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
