@@ -1,14 +1,18 @@
 # Free Web Tools
 > Free web tools for designers, developers, and creators.
 
-## Live Tools
+---
+
+## 🟢 Live Tools
 
 | Tool | Category | Published |
 |------|----------|-----------|
 | Color Contrast Checker | Design | April 2026 |
 | Dummy Text Generator | Content | April 4, 2026 |
 
-## Coming Soon
+---
+
+## 🔜 Coming Soon
 
 | Tool | Category |
 |------|----------|
@@ -18,8 +22,11 @@
 | Robots.txt Generator | SEO |
 | JSON Formatter | Developer |
 
-## Folder Structure
+---
 
+## 📁 Folder Structure
+
+~~~
 tools/
 ├── index.html
 ├── color-contrast-checker/
@@ -32,13 +39,18 @@ tools/
     └── assets/
         ├── css/style.css
         └── js/app.js
+~~~
 
-## Deployment
+---
 
-- Auto-deploy: GitHub Actions on every git push
-- Server path: ~/public_html/tools
+## 🚀 Deployment
 
-## Built by
+- Auto-deploy via GitHub Actions on every git push
+- Server path: `~/public_html/tools`
+
+---
+
+## 👨‍💻 Built by
 
 Ajay K.
 
