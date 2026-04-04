@@ -3,7 +3,7 @@
 
 ---
 
-## 🟢 Live Tools
+## Live Tools
 
 | Tool | Category | Published |
 |------|----------|-----------|
@@ -12,7 +12,7 @@
 
 ---
 
-## 🔜 Coming Soon
+## Coming Soon
 
 | Tool | Category |
 |------|----------|
@@ -24,7 +24,7 @@
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ~~~
 tools/
@@ -43,14 +43,14 @@ tools/
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 - Auto-deploy via GitHub Actions on every git push
-- Server path: `~/public_html/tools`
+- Server path: ~/public_html/tools
 
 ---
 
-## 👨‍💻 Built by
+## Built by
 
 Ajay K.
 
