@@ -1,13 +1,12 @@
-# Digital BigHit Tools
-> Free web tools for designers, developers, and creators — built by Ajay K.
-> Live at: https://tools.digitalbighit.com
+# Free Web Tools
+> Free web tools for designers, developers, and creators.
 
 ## Live Tools
 
-| Tool | URL | Category | Published |
-|------|-----|----------|-----------|
-| Color Contrast Checker | /color-contrast-checker/ | Design | April 2026 |
-| Dummy Text Generator | /dummy-text-generator/ | Content | April 4, 2026 |
+| Tool | Category | Published |
+|------|----------|-----------|
+| Color Contrast Checker | Design | April 2026 |
+| Dummy Text Generator | Content | April 4, 2026 |
 
 ## Coming Soon
 
@@ -36,14 +35,11 @@ tools/
 
 ## Deployment
 
-- Hosting: Hostinger
-- Repo: https://github.com/itsme-akay/tools
 - Auto-deploy: GitHub Actions on every git push
 - Server path: ~/public_html/tools
 
 ## Built by
 
-Ajay K. — https://digitalbighit.com
-Buy me a coffee: https://www.buymeacoffee.com/ajayk
+Ajay K.
 
-© 2026 Digital BigHit · Made in India
+© 2026 · Made in India
